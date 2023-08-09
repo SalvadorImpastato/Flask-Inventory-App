@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inventory Manager - List Products</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/gettingstarted">Getting Started</a></li>
+                <li><a href="/products">Manage Products</a></li>
+                <li><a href="/updateproduct">Update Product</a></li>
+                <li><a href="/listproducts">List Products</a></li>
+                <li><a href="/search">Search Products</a></li>
+                <li><a href="/analytics">Product Analytics</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>List Products</h1>
+    <table>
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Product Category</th>
+            <th>Price</th>
+            <th>Available Quantity</th>
+            <th></th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{ product['_id'] }}</td>
+            <td>{{ product['ProductName'] }}</td>
+            <td>{{ product['ProductCategory'] }}</td>
+            <td>{{ product['Price'] }}</td>
+            <td>{{ product['AvailableQuantity'] }}</td>
+            <td><button onclick="deleteProduct('{{ product['_id'] }}')">Delete</button></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <script>
+        function deleteProduct(id) {
+            fetch('/products/' + id, {
+                method: 'DELETE'
+            }).then(response => response.json())
+                .then(data => {
+                    if (data.result) {
+                        alert('Product deleted successfully');
+                        location.reload();
+                    } else {
+                        alert(data.error);
+                    }
+                });
+        }
+    </script>
+</body>
+</html>

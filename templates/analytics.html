@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Analytics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.get('{{ url_for('get_product_analytics') }}', function(data) {
+                $('#total_count').text(data.total_count);
+                $('#most_popular_category').text(data.most_popular_category);
+                $('#average_price').text(data.average_price);
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/gettingstarted">Getting Started</a></li>
+                <li><a href="/products">Manage Products</a></li>
+                <li><a href="/updateproduct">Update Product</a></li>
+                <li><a href="/listproducts">List Products</a></li>
+                <li><a href="/search">Search Products</a></li>
+                <li><a href="/analytics">Product Analytics</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>Product Analytics</h1>
+    <table id="analyticsTable">
+        <tr>
+            <th>Total Count of Products:</th>
+            <td id="total_count"></td>
+        </tr>
+        <tr>
+            <th>Most Popular Product Category:</th>
+            <td id="most_popular_category"></td>
+        </tr>
+        <tr>
+            <th>Average Price of Products:</th>
+            <td id="average_price"></td>
+        </tr>
+    </table>
+</body>
+</html>

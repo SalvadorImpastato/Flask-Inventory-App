@@ -1,0 +1,137 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #2594d4;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+h1, p {
+    padding: 10px;
+    margin-left: 15px;
+}
+
+
+header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+header nav li {
+    margin: 0 10px;
+    display: inline;
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+}
+
+header nav a:hover {
+    color: #ddd;
+}
+
+main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+table, tr, th {
+    margin-left: 10px;
+}
+
+h2 {
+    margin-left: 20px;
+}
+
+h3 {
+    margin-left: 15px;
+    color: red;
+}
+
+#add-product-form {
+    margin-left: 20px;
+}
+
+#update-product-form {
+    margin-left: 20px;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#searchForm {
+    margin-left: 15px;
+}
+
+input[type="text"], input[type="submit"] {
+    padding: 8px; 
+    border-radius: 4px;
+}
+
+input[type="number"], input[type="submit"] {
+    padding: 8px; 
+    border-radius: 4px;
+}
+
+input[type="submit"], input[type="submit"] {
+    padding: 8px; 
+    margin-bottom: 16px;
+}
+
+label {
+    font-size: 18px;
+}
+
+a:visited {
+    color: inherit;
+}
+
+code {
+    background-color: #f4f4f4;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.using {
+    font-size: 0.6em;
+    font-weight: bold;
+}
+
+li:not(header li) {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+h2 {
+    color: #2594d4;
+}

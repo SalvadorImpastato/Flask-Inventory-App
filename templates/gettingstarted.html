@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Getting Started</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/gettingstarted">Getting Started</a></li>
+                <li><a href="/products">Manage Products</a></li>
+                <li><a href="/updateproduct">Update Product</a></li>
+                <li><a href="/listproducts">List Products</a></li>
+                <li><a href="/search">Search Products</a></li>
+                <li><a href="/analytics">Product Analytics</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>Getting Started with Inventory Manager</h1>
+    <p>Welcome to Inventory Manager, app that allows you to manage and search for products using a simple API or web interface. This page will guide you through the basics of using the app and its API.</p>
+    <h2>Using the App</h2>
+    <p>The Inventory Manager app provides several HTML pages that allow you to interact with the app. Here are the available pages and their functions:</p>
+    <ul>
+        <li><strong><a href="/products">Manage Products:</a></strong> This page allows you to add, update, and delete products in the app's database. On this page can utilize the endpoint <code>/products</code> with the convience of the website.</li>
+        <li><strong><a href="/updateproduct">Update Product:</a></strong> This page allows you to update the details of existing products in the app’s database. On this page can utilize the endpoint <code>updaateproduct</code> with the convience of the website.</li>
+        <li><strong><a href="/listproducts">List Products:</a></strong> This page displays a list of all products in the app's database. On this page can utilize the endpoint <code>/listproducts</code> with the convience of the website.</li>
+        <li><strong><a href="/search">Search Products:</a></strong> This page allows you to search for products using Elasticsearch. On this page can utilize the endpoint <code>/search</code> with the convience of the website.</li>
+        <li><strong><a href="/analytics">Product Analytics:</a></strong> This page displays aggregated product data, such as the total count of products, the most popular product category, and the average price of products. On this page can utilize the endpoint <code>/analytics</code> with the convience of the website.</li>
+    </ul>
+    <h2>Using the API</h2>
+    <p>The Inventory Manager app provides an API that allows you to interact with the app programmatically. The API uses standard HTTP methods (GET, POST, PUT, DELETE) to perform operations on your product data. Here are the API endpoints and their functions:</p>
+    <h3>Make sure to replace http://localhost:5000/products with the correct URL for you API's enpoints! For example <code>http://Hosting URL:correct port/prodcuts</code></h3>
+    <ul>
+        <li><strong>Add Products:</strong> You can add a new product to the app's database by sending a POST request to the <code>/products</code> endpoint with a JSON payload that contains the product data.</li>
+        <span class="using">Using PowerShell:</span>
+<pre><code>Invoke-WebRequest -Method POST -ContentType "application/json" -Body '{"ProductName": "Mystical Unicorn Plushie", "ProductCategory": "Toys", "Price": 14.99, "AvailableQuantity": 20}' -Uri http://localhost:5000/products
+</code></pre>
+
+        <span class="using">Using cURL:</span>
+<pre><code>curl -X POST -H "Content-Type: application/json" -d '{"ProductName": "Mystical Unicorn Plushie", "ProductCategory": "Toys", "Price": 14.99, "AvailableQuantity": 20}' http://localhost:5000/products
+</code></pre>
+
+        <li><strong>Get Products:</strong> You can retrieve a list of all products in the app's database by sending a GET request to the <code>/products</code> endpoint.:</li>
+        <span class="using">Using PowerShell:</span>
+<pre><code>Invoke-WebRequest -Method GET -Uri http://localhost:5000/products | Select-Object -ExpandProperty Content
+</code></pre>
+
+        <span class="using">Using cURL:</span>
+<pre><code>curl http://localhost:5000/products
+</code></pre>
+
+        <li><strong>Fetch a Specific Product:</strong> You can retrieve a specific product from the app's database by sending a GET request to the <code>/products/{id}</code> endpoint, where <code>{id}</code> is the ID of the product you want to fetch.</li>
+        <span class="using">Using PowerShell:</span>
+<pre><code>Invoke-WebRequest -Method GET -Uri http://localhost:5000/products/{id} | Select-Object -ExpandProperty Content
+</code></pre>
+
+        <span class="using">Using cURL:</span>
+<pre><code>curl http://localhost:5000/products/{id}
+</code></pre>
+
+        <li><strong>Update an Existing Product:</strong> You can update an existing product in the app's database by sending a PUT request to the <code>/products/{id}</code> endpoint, where <code>{id}</code> is the ID of the product you want to update.</li>
+        <span class="using">Using PowerShell:</span>
+<pre><code>Invoke-WebRequest -Method PUT -ContentType "application/json" -Body '{"ProductName": "Mystical Plushie", "ProductCategory": "Toys", "Price": 14.99, "AvailableQuantity": 20}' -Uri http://localhost:5000/products/{id}
+</code></pre>
+
+        <span class="using">Using cURL:</span>
+<pre><code>curl -X PUT -H "Content-Type: application/json" -d '{"ProductName": "Mystical Plushie", "ProductCategory": "Toys", "Price": 14.99, "AvailableQuantity": 20}' http://localhost:5000/products/{id}
+</code></pre>
+
+        <li><strong>Delete a Product:</strong> You can delete an existing product from the app's database by sending a DELETE request to the <code>/products/{id}</code> endpoint, where <code>{id}</code> is the ID of the product you want to delete.</li>
+        <span class="using">Using PowerShell:</span>
+<pre><code>Invoke-WebRequest -Method DELETE -Uri http://localhost:5000/products/{id}
+</code></pre>
+
+        <span class="using">Using cURL:</span>
+<pre><code>curl -X DELETE http://localhost:5000/products/{id}
+</code></pre>
+
+        <li><strong>Elasticsearch:</strong>You can search for products using Elasticsearch by sending a GET request to `http://localhost:5000/products/search?query={query}` where `{query}` is your search query.</li>
+        <span class="using">Using PowerShell:</span>
+<pre><code>Invoke-WebRequest -Method GET -Uri http://localhost:5000/products/search?query=Plushie | Select-Object -ExpandProperty Content
+</code></pre>
+
+        <span class="using">Using cURL:</span>
+<pre><code>curl http://localhost:5000/products/search?query=Plushie
+</code></pre>
+
+        <li><strong>Analytics:</strong>You can get aggregated product data such as total count of products, most popular product category and average price of products by sending a GET request to `http://localhost:5000/products/analytics`.</li>
+        <span class="using">Using PowerShell:</span>
+<pre><code>
+    Invoke-WebRequest -Method GET -Uri http://localhost:5000/products/analytics | Select-Object -ExpandProperty Content
+</code></pre>
+
+        <span class="using">Using cURL:</span>
+<pre><code>curl http://localhost:5000/products/analytics
+</code></pre>
+    </ul>
+    <p>Please note that you will need to replace <code>{id}</code> with the actual ID of the product you want to fetch, update, or delete.</p>
+    <h2>Conclusion</h2>
+    <p>This is the basics of the Inventory Manager app and its API.</p>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+            $(document).ready(function() {
+                $('#searchForm').submit(function(event) {
+                    event.preventDefault();
+                    var query = $('#query').val();
+                    $.get('{{ url_for('search_products') }}', {query: query}, function(data) {
+                        var products = data;
+                        $('#resultsTable tbody').empty();
+                        for (var i = 0; i < products.length; i++) {
+                            var product = products[i];
+                            var row = '<tr>';
+                            row += '<td>' + product.id + '</td>';
+                            row += '<td>' + product.ProductName + '</td>';
+                            row += '<td>' + product.ProductCategory + '</td>';
+                            row += '<td>' + product.Price + '</td>';
+                            row += '<td>' + product.AvailableQuantity + '</td>';
+                            row += '</tr>';
+                            $('#resultsTable tbody').append(row);
+                        }
+                    });
+                });
+            });
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/gettingstarted">Getting Started</a></li>
+                <li><a href="/products">Manage Products</a></li>
+                <li><a href="/updateproduct">Update Product</a></li>
+                <li><a href="/listproducts">List Products</a></li>
+                <li><a href="/search">Search Products</a></li>
+                <li><a href="/analytics">Product Analytics</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>Product Search</h1>
+    <form id="searchForm">
+        <label for="query">Search:</label>
+        <input type="text" id="query" name="query">
+        <input type="submit" value="Search">
+    </form>
+    <h2>Search Results</h2>
+    <table id="resultsTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Product Name</th>
+                <th>Product Category</th>
+                <th>Price</th>
+                <th>Available Quantity</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</body>
+</html>

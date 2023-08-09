@@ -1,0 +1,93 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-inventory
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      initContainers:
+      - name: wait-for-dependencies
+        image: appropriate/curl
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          until curl --output /dev/null --silent --head --fail http://elasticsearch:9200; do
+            echo "Waiting for Elasticsearch..."
+            sleep 5
+          done
+          echo "Elasticsearch is ready!"
+      containers:
+      - name: flask-inventory
+        image: salsproject/flask-inventory-app
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5000
+        env:
+        - name: MONGO_URI
+          value: mongodb://mongo:27017/myDatabase
+        - name: ELASTICSEARCH_URL
+          value: http://elasticsearch:9200
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo
+spec:
+  serviceName: mongo
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongo
+        image: mongo:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 27017
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: elasticsearch
+spec:
+  serviceName: elasticsearch
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elasticsearch
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+    spec:
+      containers:
+      - name: elasticsearch
+        image: elasticsearch:7.14.0
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: discovery.type
+          value: single-node
+        ports:
+        - containerPort: 9200
+        resources:
+          requests:
+            memory: "2Gi"
+          limits:
+            memory: "4Gi"
